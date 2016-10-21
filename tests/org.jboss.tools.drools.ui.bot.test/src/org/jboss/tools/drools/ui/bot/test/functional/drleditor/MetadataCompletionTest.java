@@ -2,10 +2,13 @@ package org.jboss.tools.drools.ui.bot.test.functional.drleditor;
 
 import org.jboss.reddeer.eclipse.jdt.ui.NewJavaClassWizardDialog;
 import org.jboss.reddeer.eclipse.jdt.ui.NewJavaClassWizardPage;
+import org.jboss.reddeer.junit.execution.annotation.RunIf;
 import org.jboss.reddeer.junit.requirement.inject.InjectRequirement;
 import org.jboss.reddeer.junit.runner.RedDeerSuite;
 import org.jboss.reddeer.swt.impl.text.LabeledText;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
+import org.jboss.tools.common.reddeer.condition.IssueIsClosed;
+import org.jboss.tools.common.reddeer.condition.IssueIsClosed.Jira;
 import org.jboss.tools.drools.reddeer.editor.DrlEditor;
 import org.jboss.tools.drools.reddeer.editor.RuleEditor;
 import org.jboss.tools.drools.reddeer.perspective.DroolsPerspective;
@@ -14,7 +17,6 @@ import org.jboss.tools.drools.ui.bot.test.util.annotation.UsePerspective;
 import org.jboss.tools.runtime.reddeer.requirement.RuntimeReqType;
 import org.jboss.tools.runtime.reddeer.requirement.RuntimeRequirement;
 import org.jboss.tools.runtime.reddeer.requirement.RuntimeRequirement.Runtime;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -89,6 +91,8 @@ public class MetadataCompletionTest extends DrlCompletionParent {
 	}
 
 	@Test
+	@Jira("RHBRMS-642")
+	@RunIf(conditionClass = IssueIsClosed.class)
 	@UsePerspective(DroolsPerspective.class)
 	@UseDefaultProject
 	public void testGlobalCodeCompletion() {
@@ -98,15 +102,7 @@ public class MetadataCompletionTest extends DrlCompletionParent {
 
 		selectFromContentAssist(editor, "global");
 		
-		try {
-			selectFromContentAssist(editor, "List");
-		} catch (AssertionError exception) {
-			if (exception.getMessage().contains("Could not find 'List' in content assist")) {
-				Assert.fail("BZ1029429: No code completion after 'global'");
-			} else {
-				throw exception;
-			}
-		}
+		selectFromContentAssist(editor, "List");
 		
 		editor.writeText("list");
 
