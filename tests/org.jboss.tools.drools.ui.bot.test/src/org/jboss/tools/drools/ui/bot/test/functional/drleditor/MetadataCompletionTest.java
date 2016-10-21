@@ -1,5 +1,7 @@
 package org.jboss.tools.drools.ui.bot.test.functional.drleditor;
 
+import org.jboss.reddeer.common.wait.TimePeriod;
+import org.jboss.reddeer.common.wait.WaitUntil;
 import org.jboss.reddeer.eclipse.jdt.ui.NewJavaClassWizardDialog;
 import org.jboss.reddeer.eclipse.jdt.ui.NewJavaClassWizardPage;
 import org.jboss.reddeer.junit.execution.annotation.RunIf;
@@ -9,6 +11,7 @@ import org.jboss.reddeer.swt.impl.text.LabeledText;
 import org.jboss.reddeer.workbench.impl.editor.TextEditor;
 import org.jboss.tools.common.reddeer.condition.IssueIsClosed;
 import org.jboss.tools.common.reddeer.condition.IssueIsClosed.Jira;
+import org.jboss.tools.drools.reddeer.editor.ContentAssist;
 import org.jboss.tools.drools.reddeer.editor.DrlEditor;
 import org.jboss.tools.drools.reddeer.editor.RuleEditor;
 import org.jboss.tools.drools.reddeer.perspective.DroolsPerspective;
@@ -128,6 +131,9 @@ public class MetadataCompletionTest extends DrlCompletionParent {
 	@UsePerspective(DroolsPerspective.class)
 	@UseDefaultProject
 	public void testGlobalUsageConsequence() {
+		final String jdkAddObjectLine = "add(Object e) : boolean - List";
+		final String openjdkAddObjectLine = "add(Object arg0) : boolean - List";
+		
 		RuleEditor editor = master.showRuleEditor();
 		editor.setPosition(2, 0);
 		editor.writeText("import java.util.List\n\nglobal List list");
@@ -137,7 +143,18 @@ public class MetadataCompletionTest extends DrlCompletionParent {
 		selectFromContentAssist(editor, "list : List");
 
 		editor.writeText(".");
-		selectFromContentAssist(editor, "add(Object e) : boolean - List");
+		
+		// open JDK workaround
+		ContentAssist contentAssist = editor.createContentAssist();
+		WaitUntil.sleep(TimePeriod.SHORT);
+		
+		if (contentAssist.getItems().contains(jdkAddObjectLine)) {
+			contentAssist.close();
+			selectFromContentAssist(editor, jdkAddObjectLine);
+		} else {
+			contentAssist.close();
+			selectFromContentAssist(editor, openjdkAddObjectLine);
+		}
 		editor.writeText("$s");
 
 		editor.setPosition(11, 20);
