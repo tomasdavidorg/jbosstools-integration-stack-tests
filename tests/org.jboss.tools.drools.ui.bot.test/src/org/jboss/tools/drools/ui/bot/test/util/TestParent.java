@@ -173,7 +173,6 @@ public abstract class TestParent {
 		ConsoleView console = new ConsoleView();
 		console.open();
 		try {
-			// FIXME uncomment once my pull request is applied
 			// console.removeAllTerminatedLaunches();
 			new DefaultToolItem("Remove All Terminated Launches").click();
 		} catch (Exception ex) {

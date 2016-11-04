@@ -85,7 +85,6 @@ public class DslEditorTest extends TestParent {
 		dialog.setScope(Scope.CONSEQUENCE);
 		dialog.ok();
 
-		// FIXME this is annoying - closing dialog makes editor loose focus and nothing works then
 		editor = openTestDslFile();
 
 		List<DslLine> newLines = editor.getDslLines();
@@ -115,13 +114,11 @@ public class DslEditorTest extends TestParent {
 		dialog.setScope(Scope.CONSEQUENCE);
 		dialog.ok();
 
-		// FIXME this is annoying - closing dialog makes editor loose focus and nothing works then
 		editor = openTestDslFile();
 
 		List<DslLine> newLines = editor.getDslLines();
 		Assert.assertEquals("Line count is same!", origLines.size() + 1, newLines.size());
 
-		// FIXME this doesn't really work, it needs to be addressed in bz#1013750
 		DslLine line = newLines.get(position + 1);
 		Assert.assertEquals("DSL Editor can't change the order of DSL lines", MAPPING, line.getMapping());
 		Assert.assertEquals("Wrong expression!", EXPRESSION, line.getExpression());
@@ -143,7 +140,6 @@ public class DslEditorTest extends TestParent {
 		dialog.setLanguageExpression(EXPRESSION);
 		dialog.ok();
 
-		// FIXME this is annoying - closing dialog makes editor loose focus and nothing works then
 		editor = openTestDslFile();
 
 		List<DslLine> newLines = editor.getDslLines();
@@ -188,8 +184,6 @@ public class DslEditorTest extends TestParent {
 		for (DslLine line : origLines) {
 			Assert.assertTrue("Missing line " + line, newLines.contains(line));
 		}
-
-		// TODO test the order of dsl lines?
 	}
 
 	@Test
