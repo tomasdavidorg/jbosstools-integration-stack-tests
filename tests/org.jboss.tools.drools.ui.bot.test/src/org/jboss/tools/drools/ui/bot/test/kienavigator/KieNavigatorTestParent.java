@@ -48,6 +48,10 @@ public class KieNavigatorTestParent extends TestParent {
 	public void waitForServer() throws IOException {
 		int time = 0;
 		int responceCode = 0;
+		
+		// wait a while for the server
+		AbstractWait.sleep(TimePeriod.LONG);
+		
 		while (time < MAX_WAIT_TIME) {
 			responceCode = RestClient.getResponseCode();
 			LOGGER.debug("Waiting for server. Responce code: " + responceCode);
