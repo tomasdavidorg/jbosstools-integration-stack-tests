@@ -26,7 +26,7 @@ public class KieNavigatorTestParent extends TestParent {
 
 	private static final String PROGRESS_INFORMATION_LABEL = "Progress Information";
 
-	protected static final String REPO_URL = "https://github.com/jboss-developer/jboss-brms-repository.git";
+	protected static final String REPO_URL = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
 
 	protected static final String WEB_APP_NAME = "business-central";
 
@@ -88,6 +88,8 @@ public class KieNavigatorTestParent extends TestParent {
 		sp.setHttpPort(HTTP_PORT);
 		sp.setGitPort(GIT_PORT);
 		sp.setGitRepoPath(gitDirectory);
+		
+		takeScreenshot("server_settings");
 	}
 
 	protected void progressInformationWaiting() {

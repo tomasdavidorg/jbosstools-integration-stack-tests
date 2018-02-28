@@ -78,7 +78,7 @@ public class CreateItemsRestTest extends KieNavigatorTestParent {
 		Assert.assertEquals(PROJECT_VERSION, project.getVersion());
 
 		List<Project> projectList2 = RestClient.getProjects(REPO_2);
-		Assert.assertEquals(4, projectList2.size());
+		Assert.assertEquals(1, projectList2.size());
 	}
 
 	private void initServerStructure(KieNavigatorView knv) {

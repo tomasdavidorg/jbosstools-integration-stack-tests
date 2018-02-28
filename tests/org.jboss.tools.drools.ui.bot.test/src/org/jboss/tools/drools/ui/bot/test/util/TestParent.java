@@ -215,7 +215,8 @@ public abstract class TestParent {
 	protected String createTempDir(String name) {
 		File dir = new File("tmp", name);
 		dir.mkdirs();
-
+		
+		LOGGER.debug("Temporary dir: " + dir.getAbsolutePath());
 		return dir.getAbsolutePath();
 	}
 

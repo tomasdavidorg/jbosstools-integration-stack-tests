@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import org.eclipse.reddeer.common.condition.AbstractWaitCondition;
+import org.eclipse.reddeer.common.condition.WaitCondition;
 import org.eclipse.reddeer.common.wait.AbstractWait;
 import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitUntil;
 import org.eclipse.reddeer.eclipse.ui.views.markers.ProblemsView;
 import org.eclipse.reddeer.eclipse.ui.views.markers.ProblemsView.ProblemType;
 import org.junit.Assert;
@@ -27,11 +30,29 @@ public class ProjectTestParent extends TestParent {
 	}
 
 	protected void assertHelloConsoleText(String consoleText) {
+		new WaitUntil(new AbstractWaitCondition() {
+			
+			@Override
+			public boolean test() {
+				// TODO Auto-generated method stub
+				return consoleText.contains(HELLO_WORLD);
+			}
+		}, TimePeriod.VERY_LONG);
+		
 		Assert.assertNotNull("Console text is empty.", consoleText);
 		Assert.assertTrue("Unexpected text in console:\n" + consoleText, consoleText.contains(HELLO_WORLD));
 	}
 	
 	protected void assertHelloGoodbyeConsoleText(String consoleText) {
+new WaitUntil(new AbstractWaitCondition() {
+			
+			@Override
+			public boolean test() {
+				// TODO Auto-generated method stub
+				return consoleText.contains(GOODBYE_WORLD);
+			}
+		}, TimePeriod.VERY_LONG);
+		
 		assertHelloConsoleText(consoleText);
 		Assert.assertTrue("Unexpected text in console:\n" + consoleText, consoleText.contains(GOODBYE_WORLD));
 	}
